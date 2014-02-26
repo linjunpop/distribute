@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+
+require 'blast_off'
+require 'rainbow'
+require 'hipchat'
+require 'dotenv'
+
+require 'distribute'
+
+Dotenv.load!
+
+ipa_file_path = "#{ENV['APP_NAME']}.ipa"
+
+# Check if IPA file exists
+unless File.exists?(ipa_file_path)
+  puts "编译中……"
+  `bin/ipa build -s '#{ENV['SCHEME']}' -c '#{ENV['CONFIGURATION']}'`
+  puts "编译完成"
+end
+
+url = BlastOff::Services::Qiniu.new(
+  ipa_file_path: ipa_file_path,
+  access_key: ENV['QINIU_ACCESS_KEY'],
+  secret_key: ENV['QINIU_SECRET_KEY'],
+  bucket: ENV['QINIU_BUCKET'],
+  custom_domain: ENV['QINIU_CUSTOM_DOMAIN'],
+  use_secure_connection: true
+).distribute
+
+puts "已发布到："
+puts url.foreground(:blue)
+
+FileUtils.rm ipa_file_path
+FileUtils.rm "#{ENV['APP_NAME']}.app.dSYM.zip"
+
+message = "[#{ENV['APP_NAME']}]--#{ENV['CONFIGURATION']}-- New build: <a href='#{url}'>#{url}</a>"
+client = HipChat::Client.new(ENV['HIPCHAT_API_TOKEN'])
+client['AdHoc'].send('粉粉', message, color: 'green', notify: true)
