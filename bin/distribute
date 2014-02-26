@@ -14,7 +14,7 @@ ipa_file_path = "#{ENV['APP_NAME']}.ipa"
 # Check if IPA file exists
 unless File.exists?(ipa_file_path)
   puts "编译中……"
-  `bin/ipa build -s '#{ENV['SCHEME']}' -c '#{ENV['CONFIGURATION']}'`
+  `bundle exec ipa build -s '#{ENV['SCHEME']}' -c '#{ENV['CONFIGURATION']}'`
   puts "编译完成"
 end
 
