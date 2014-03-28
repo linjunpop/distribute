@@ -35,4 +35,4 @@ FileUtils.rm "#{ENV['APP_NAME']}.app.dSYM.zip"
 
 message = "[#{ENV['APP_NAME']}]--#{ENV['CONFIGURATION']}-- New build: <a href='#{url}'>#{url}</a>"
 client = HipChat::Client.new(ENV['HIPCHAT_API_TOKEN'])
-client['AdHoc'].send('粉粉', message, color: 'green', notify: true)
+client['AdHoc'].send('粉粉', message, color: 'green', notify: 1)
