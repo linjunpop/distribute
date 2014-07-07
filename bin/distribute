@@ -33,6 +33,6 @@ puts url.foreground(:blue)
 FileUtils.rm ipa_file_path
 FileUtils.rm "#{ENV['APP_NAME']}.app.dSYM.zip"
 
-message = "[#{ENV['APP_NAME']}]--#{ENV['CONFIGURATION']}-- New build: <a href='#{url}'>#{url}</a>"
+message = "[#{ENV['APP_NAME']}] {#{ENV['CONFIGURATION']}} #{url} @all"
 client = HipChat::Client.new(ENV['HIPCHAT_API_TOKEN'])
-client['AdHoc'].send('粉粉', message, color: 'green', notify: 1)
+client['AdHoc'].send('粉粉', message, color: 'green', notify: true, message_format: 'text')
