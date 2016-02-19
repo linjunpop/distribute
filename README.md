@@ -1,8 +1,8 @@
 # Distribute
 
-:warning: 不再维护了，建议使用 [fastlane](https://github.com/fastlane/fastlane) 结合 [blast_off](https://github.com/linjunpop/blast_off) 来实现更可靠的服务。
-
 编译 App，上传到七牛，然后发送通知在 Hipchat
+
+> :warning: 不再维护了，建议使用 [fastlane](https://github.com/fastlane/fastlane) 结合 [blast_off](https://github.com/linjunpop/blast_off) 来实现更可靠的服务。
 
 ## Installation
 
